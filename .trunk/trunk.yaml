@@ -28,3 +28,4 @@ lint:
       paths:
         - .devcontainer/**
         - .trunk/**
+        - kind-config/**

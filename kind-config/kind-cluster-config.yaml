@@ -1,0 +1,47 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+- role: kind-m1
+  image: kindest/node:v1.29.4
+  extraMounts:
+  - hostPath: /d/kube-kind/m1
+    containerPath: /data
+  extraPortMappings:
+  - containerPort: 80   # Ingress HTTP
+    hostPort: 8080
+    protocol: TCP
+  - containerPort: 443  # Ingress HTTPS
+    hostPort: 8443
+    protocol: TCP
+    
+  # NodePort 설정용
+  - containerPort: 30080  
+    hostPort: 30080       
+    protocol: TCP
+  kubeadmConfigPatches:  # ingress 설치를 위한 설정
+  - |
+    kind: InitConfiguration
+    nodeRegistration:
+      kubeletExtraArgs:
+        node-labels: "ingress-ready=true"
+- role: kind-w1
+  image: kindest/node:v1.29.4
+  extraMounts:
+  - hostPath: /d/kube-kind/w1
+    containerPath: /data
+- role: w2
+  image: kindest/node:v1.29.4
+  extraMounts:
+  - hostPath: /d/kube-kind/w2
+    containerPath: /data
+- role: kind-w3
+  image: kindest/node:v1.29.4
+  extraMounts:
+  - hostPath: /d/kube-kind/w3
+    containerPath: /data
+
+# 둘 다 kind 기본값. 충돌 날 경우 변경하기
+networking:
+  disableDefaultCNI: true        # 외부 CNI 설정하기 위해 필수적
+  serviceSubnet: "10.96.0.0/12"
+  podSubnet: "10.244.0.0/16"
