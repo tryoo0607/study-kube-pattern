@@ -8,10 +8,10 @@ nodes:
     containerPath: /data
   extraPortMappings:
   - containerPort: 80   # Ingress HTTP
-    hostPort: 8080
+    hostPort: 18080
     protocol: TCP
   - containerPort: 443  # Ingress HTTPS
-    hostPort: 8443
+    hostPort: 18443
     protocol: TCP
     
   # NodePort 설정용
