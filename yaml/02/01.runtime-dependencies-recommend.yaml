@@ -1,0 +1,58 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pod
+  namespace: my-namespace
+  labels:
+    app: nginx
+spec:
+  securityContext:
+    runAsNonRoot: true
+    seccompProfile:
+      type: RuntimeDefault
+  containers:
+    - name: nginx
+      image: nginx@sha256:your_digest_here # ← 실제 digest로 바꿔야 함
+      ports:
+        - containerPort: 80
+      env:
+        - name: ENV
+          valueFrom:
+            configMapKeyRef:
+              name: nginx-config
+              key: COOKIE_SIZE
+      volumeMounts:
+        - name: html-volume
+          mountPath: /usr/share/nginx/html
+      securityContext:
+        readOnlyRootFilesystem: true
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+            - ALL
+        runAsUser: 10001
+        runAsGroup: 10001
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+        limits:
+          cpu: 500m
+          memory: 256Mi
+      livenessProbe:
+        httpGet:
+          path: /
+          port: 80
+        initialDelaySeconds: 10
+        periodSeconds: 10
+      readinessProbe:
+        httpGet:
+          path: /
+          port: 80
+        initialDelaySeconds: 5
+        periodSeconds: 5
+  volumes:
+    - name: html-volume
+      persistentVolumeClaim:
+        claimName: nginx-html-pvc
+  automountServiceAccountToken: false
