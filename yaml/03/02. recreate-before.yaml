@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recreate-demo
+  namespace: test
+spec:
+  replicas: 3
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: recreate-demo
+  template:
+    metadata:
+      labels:
+        app: recreate-demo
+    spec:
+      containers:
+      - name: web
+        image: nginx:1.21
+        ports:
+        - containerPort: 80
+        env:
+        - name: VERSION
+          value: "v1.21"
