@@ -1,7 +1,7 @@
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
 nodes:
-- role: kind-m1
+- role: control-plane
   image: kindest/node:v1.29.4
   extraMounts:
   - hostPath: /d/kube-kind/m1
@@ -24,17 +24,17 @@ nodes:
     nodeRegistration:
       kubeletExtraArgs:
         node-labels: "ingress-ready=true"
-- role: kind-w1
+- role: worker
   image: kindest/node:v1.29.4
   extraMounts:
   - hostPath: /d/kube-kind/w1
     containerPath: /data
-- role: w2
+- role: worker
   image: kindest/node:v1.29.4
   extraMounts:
   - hostPath: /d/kube-kind/w2
     containerPath: /data
-- role: kind-w3
+- role: worker
   image: kindest/node:v1.29.4
   extraMounts:
   - hostPath: /d/kube-kind/w3
