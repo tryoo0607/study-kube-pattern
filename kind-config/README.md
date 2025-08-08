@@ -1,10 +1,8 @@
 ## 환경
----
 Windows 환경에서 진행하였으며, Powershell을 통해 kubectl, kind 등을 사용했습니다.
 
 
 ## 실행 순서
----
 1. Kind Cluster 생성
 ```powershell
 kind create cluster --config kind-cluster-config.yaml
@@ -31,7 +29,8 @@ kind create cluster --config kind-cluster-config.yaml
 kind delete cluster
 ```
 
-===
+---
+
 ## Namespace Reset
 ```powershell
 ./reset-namespace.ps1
