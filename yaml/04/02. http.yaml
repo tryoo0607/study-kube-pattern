@@ -8,6 +8,9 @@ spec:
   containers:
   - name: probe-test
     image: tryoo0607/probe-test:latest
+    env:
+    - name: PROBE_DELAY_LIVENESS_SEC
+      value: 30
     ports:
     - containerPort: 8080
     livenessProbe:
