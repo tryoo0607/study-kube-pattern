@@ -15,6 +15,7 @@ kind create cluster --config kind-cluster-config.yaml
 - 아래 리소스들이 자동으로 추가됩니다.
     - namepace-test.yaml
     - default-quota.yaml
+    - default-limit-range.yaml  
 
 3. (선택 사항) 외부 CNI(Calico) 및 Ingress 설치
 ```powershell

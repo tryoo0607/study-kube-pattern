@@ -5,8 +5,9 @@ Linux(Ubuntu 24.04) 환경에서 진행하였으며, kubectl, kind 등을 사용
 ## 실행 순서
 1. Kind Cluster 생성
 ```bash
-kind create cluster --config kind-cluster-config.yaml
+./create-cluster.sh
 ```
+- kind-cluster-config.yaml을 사용하여 cluster를 생성함
 
 2. 테스트 환경 구성용 리소스 적용
 ```bash
@@ -15,6 +16,7 @@ kind create cluster --config kind-cluster-config.yaml
 - 아래 리소스들이 자동으로 추가됩니다.
     - namepace-test.yaml
     - default-quota.yaml
+    - default-limit-range.yaml
 
 3. (선택 사항) 외부 CNI(Calico) 및 Ingress 설치
 ```bash

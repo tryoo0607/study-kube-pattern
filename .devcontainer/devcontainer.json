@@ -1,6 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/devcontainers/spec/main/schemas/devContainer.schema.json",
   "name": "Kubelint-Trunk-Devcon",
+  "postCreateCommand": "git config --global --add safe.directory '*'",
   "build": {
     "dockerfile": "Dockerfile",
     "context": ".."
