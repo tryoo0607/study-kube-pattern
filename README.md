@@ -1,3 +1,18 @@
+# devContainer
+## 내부에서 파일 생성 시
+### 권한 부여
+```bash
+sudo chown -R root:root ${디렉토리명}
+sudo chmod -R 0777 ${디렉토리명}
+```
+- 위와 같이 설정해주어야 리눅스에서 pull시 오류발생하지 않음
+
+#### 예시
+```bash
+sudo chown -R root:root 04
+sudo chmod -R 0777 04
+```
+
 # Linux 설정
 ## 초기 설정
 ### ENV 설정
