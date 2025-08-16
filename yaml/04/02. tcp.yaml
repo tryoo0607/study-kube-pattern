@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: tcp-test
+  namespace: test
   labels:
     app: probe-test
 spec:
