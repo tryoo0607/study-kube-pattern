@@ -36,11 +36,11 @@ nodes:
   extraMounts:
   - hostPath: /d/kube-kind/w2
     containerPath: /data
-- role: worker
-  image: kindest/node:v1.29.4
-  extraMounts:
-  - hostPath: /d/kube-kind/w3
-    containerPath: /data
+# - role: worker
+#   image: kindest/node:v1.29.4
+#   extraMounts:
+#   - hostPath: /d/kube-kind/w3
+#     containerPath: /data
 
 # 둘 다 kind 기본값. 충돌 날 경우 변경하기
 networking:
