@@ -12,8 +12,6 @@ spec:
     env:
     - name: PROBE_DELAY_LIVENESS_SEC
       value: "30"
-    ports:
-    - containerPort: 8080
     livenessProbe:
       exec:
         command:
