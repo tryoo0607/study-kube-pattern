@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: grpc-test
+  labels:
+    app: probe-test
+spec:
+  containers:
+  - name: probe-test
+    image: tryoo0607/probe-test:latest
+    ports:
+    - containerPort: 50051
+    livenessProbe:
+      grpc:
+        port: 50051
+        service: ""
+      initialDelaySeconds: 5
+      timeoutSeconds: 3
+      periodSeconds: 3
+      failureThreshold: 5
