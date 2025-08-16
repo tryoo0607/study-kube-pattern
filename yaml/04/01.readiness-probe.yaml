@@ -11,7 +11,7 @@ spec:
     image: tryoo0607/probe-test:latest
     env:
     - name: PROBE_DELAY_READINESS_SEC
-      value: 30
+      value: "30"
     ports:
     - containerPort: 8080
     readinessProbe:
