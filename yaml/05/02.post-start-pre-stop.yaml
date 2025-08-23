@@ -35,5 +35,5 @@ spec:
   volumes:
   - name: lifecycle-logs
     hostPath:
-      path: /host/lifecycle-volumes
+      path: /lifecycle-volumes
       type: DirectoryOrCreate
