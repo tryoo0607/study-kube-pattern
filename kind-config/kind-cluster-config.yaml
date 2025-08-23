@@ -6,6 +6,8 @@ nodes:
   extraMounts:
   - hostPath: /kube-kind/m1
     containerPath: /data
+  - hostPath: /kube-kind/lifecycle-volumes
+    containerPath: /kube-kind/host
   extraPortMappings:
   - containerPort: 80   # Ingress HTTP
     hostPort: 18080
@@ -31,8 +33,6 @@ nodes:
   extraMounts:
   - hostPath: /kube-kind/w1
     containerPath: /data
-  - hostPath: /kube-kind/lifecycle-volumes
-    containerPath: /kube-kind/host
 - role: worker
   image: kindest/node:v1.29.4
   extraMounts:
