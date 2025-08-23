@@ -7,7 +7,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   capacity:
-    storage: 2Gi
+    storage: 8Mi
   hostPath:
     path: /lifecycle-volumes/
 ---
@@ -22,7 +22,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
+      storage: 8Mi
 ---
 apiVersion: v1
 kind: Pod
@@ -32,8 +32,8 @@ metadata:
   labels:
     app: sigterm-sigkill
 spec:
-  # nodeSelector:
-  #   kubernetes.io/hostname: kind-worker
+  nodeSelector:
+    kubernetes.io/hostname: kind-worker
   # securityContext:
   #   runAsUser: 0
   #   runAsGroup: 0
