@@ -15,6 +15,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: pvc-lifecycle-volumes
+  namespace: test
 spec:
   volumeName: pv-lifecycle-volumes
   accessModes:
