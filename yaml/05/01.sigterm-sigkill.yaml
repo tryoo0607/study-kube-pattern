@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sigterm-sigkill
+  namespace: test
+  labels:
+    app: sigterm-sigkill
+spec:
+  terminationGracePeriodSeconds: 10
+  containers:
+  - name: sigterm-sigkill
+    image: tryoo0607/pod-lifecycle-test:latest

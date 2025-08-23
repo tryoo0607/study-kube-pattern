@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: post-start-pre-stop
+  namespace: test
+  labels:
+    app: sigterm-sigkill
+spec:
+  terminationGracePeriodSeconds: 10
+  containers:
+  - name: post-start-pre-stop
+    image: tryoo0607/pod-lifecycle-test:latest
+    lifecycle:
+      postStart:
+        exec:
+          command:
+            [
+              "/bin/sh",
+              "-c",
+              "echo \"[postStart] $(date) 컨테이너 시작됨\" | tee -a /var/log/hooks/hooks.log"
+            ]
+      preStop:
+        exec:
+          command:
+            [
+              "/bin/sh",
+              "-c",
+              "echo \"[preStop] $(date) 종료 준비 시작\" | tee -a /var/log/hooks/hooks.log; sleep 5; echo \"[preStop] $(date) 종료 완료\" | tee -a /var/log/hooks/hooks.log"
+            ]
+    volumeMounts:
+    - name: lifecycle-logs
+      mountPath: /var/log/hooks
+  volumes:
+  - name: lifecycle-logs
+    hostPath:
+      path: /kube-kind/host
+      type: DirectoryOrCreate
