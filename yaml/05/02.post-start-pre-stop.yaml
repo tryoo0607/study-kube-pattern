@@ -1,4 +1,29 @@
 apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-lifecycle-volumes
+spec:
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 2Gi
+  hostPath:
+    path: /lifecycle-volumes/
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-lifecycle-volumes
+spec:
+  volumeName: pv-lifecycle-volumes
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
 kind: Pod
 metadata:
   name: post-start-pre-stop
@@ -6,11 +31,11 @@ metadata:
   labels:
     app: sigterm-sigkill
 spec:
-  nodeSelector:
-    kubernetes.io/hostname: kind-worker
-  securityContext:
-    runAsUser: 0
-    runAsGroup: 0
+  # nodeSelector:
+  #   kubernetes.io/hostname: kind-worker
+  # securityContext:
+  #   runAsUser: 0
+  #   runAsGroup: 0
   terminationGracePeriodSeconds: 10
   containers:
   - name: post-start-pre-stop
@@ -33,10 +58,9 @@ spec:
               "echo \"[preStop] $(date) 종료 준비 시작\" | tee -a /var/log/hooks/hooks.log; sleep 5; echo \"[preStop] $(date) 종료 완료\" | tee -a /var/log/hooks/hooks.log"
             ]
     volumeMounts:
-    - name: lifecycle-logs
+    - name: lifecycle-volumes
       mountPath: /var/log/hooks
   volumes:
-  - name: lifecycle-logs
-    hostPath:
-      path: /lifecycle-volumes
-      type: DirectoryOrCreate
+  - name: lifecycle-volumes
+    persistentVolumeClaim:
+      claimName: pvc-lifecycle-volumes
