@@ -6,6 +6,8 @@ metadata:
   labels:
     app: sigterm-sigkill
 spec:
+  nodeSelector:
+    kubernetes.io/hostname: kind-worker
   terminationGracePeriodSeconds: 10
   containers:
   - name: post-start-pre-stop
