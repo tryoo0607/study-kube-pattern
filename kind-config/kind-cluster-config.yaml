@@ -32,7 +32,7 @@ nodes:
   - hostPath: /kube-kind/w1
     containerPath: /data
   - hostPath: /kube-kind/lifecycle-volumes
-    containerPath: /kube-kind/host
+    containerPath: /host/lifecycle-volumes
 - role: worker
   image: kindest/node:v1.29.4
   extraMounts:
