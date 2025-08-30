@@ -1,17 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx
+  name: new-nginx
   namespace: test
 spec:
   replicas: 4
   selector:
     matchLabels:
-      app: nginx
+      app: new-nginx
   template:
     metadata:
       labels:
-        app: nginx
+        app: new-nginx
     spec:
       topologySpreadConstraints:
         - maxSkew: 1
@@ -19,7 +19,7 @@ spec:
           whenUnsatisfiable: DoNotSchedule
           labelSelector:
             matchLabels:
-              app: nginx
+              app: new-nginx
       containers:
       - name: nginx
         image: nginx:latest
