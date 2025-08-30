@@ -13,7 +13,7 @@ spec:
         app: nginx
     spec:
       nodeSelector:
-        node-role: kind-worker4
+        node-role: worker4
       containers:
       - name: nginx
         image: nginx:latest
