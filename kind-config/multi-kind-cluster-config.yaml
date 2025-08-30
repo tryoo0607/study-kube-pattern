@@ -11,9 +11,3 @@ nodes:
   image: kindest/node:v1.29.4
 - role: worker
   image: kindest/node:v1.29.4
-
-# 둘 다 kind 기본값. 충돌 날 경우 변경하기
-networking:
-  # disableDefaultCNI: true        # 외부 CNI 설정 시 true로 변경하기
-  serviceSubnet: "10.96.0.0/12"
-  podSubnet: "10.244.0.0/16"
