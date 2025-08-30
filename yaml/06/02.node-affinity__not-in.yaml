@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-notin
+  name: nginx
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nginx-notin
+      app: nginx
   template:
     metadata:
       labels:
-        app: nginx-notin
+        app: nginx
     spec:
       affinity:
         nodeAffinity:
@@ -20,9 +20,9 @@ spec:
               - key: node-role
                 operator: NotIn
                 values:
-                  - kind-worker
-                  - kind-worker3
-                  - kind-worker4
+                  - worker
+                  - worker3
+                  - worker4
       containers:
       - name: nginx
         image: nginx:latest

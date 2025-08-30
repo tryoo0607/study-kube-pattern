@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-in
+  name: nginx
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nginx-in
+      app: nginx
   template:
     metadata:
       labels:
-        app: nginx-in
+        app: nginx
     spec:
       affinity:
         nodeAffinity:
@@ -20,7 +20,7 @@ spec:
               - key: node-role
                 operator: In
                 values:
-                  - kind-worker
+                  - worker
       containers:
       - name: nginx
         image: nginx:latest

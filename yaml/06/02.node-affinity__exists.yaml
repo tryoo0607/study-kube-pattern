@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-exists
+  name: nginx
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nginx-exists
+      app: nginx
   template:
     metadata:
       labels:
-        app: nginx-exists
+        app: nginx
     spec:
       affinity:
         nodeAffinity:

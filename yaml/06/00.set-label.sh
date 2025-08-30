@@ -9,13 +9,13 @@ kubectl label node kind-worker4 node-role=worker4
 
 
 ## Node Affinity
+### Exists
+kubectl label node kind-worker3 gpu=dummy
+
 ### DoesNotExist
 kubectl label node kind-worker deprecated=dummy
 kubectl label node kind-worker2 deprecated=dummy
 kubectl label node kind-worker3 deprecated=dummy
-
-### Exists
-kubectl label node kind-worker3 gpu=dummy
 
 ### Gt
 kubectl label node kind-worker cpu-core=2
