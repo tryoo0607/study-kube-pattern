@@ -4,7 +4,7 @@ metadata:
   name: nginx
   namespace: test
 spec:
-  replicas: 8
+  replicas: 7
   selector:
     matchLabels:
       app: nginx
@@ -14,7 +14,7 @@ spec:
         app: nginx
     spec:
       topologySpreadConstraints:
-        - maxSkew: 3
+        - maxSkew: 4
           topologyKey: topology.kubernetes.io/zone
           whenUnsatisfiable: DoNotSchedule
           labelSelector:
