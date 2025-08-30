@@ -16,8 +16,8 @@ spec:
       tolerations:
         - key: "dedicated"
           operator: "Equal"
-          value: "NoExcute"
-          effect: "NoExcute"
+          value: "NoExecute"
+          effect: "NoExecute"
       containers:
         - name: nginx
           image: nginx:latest
