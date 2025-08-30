@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-in
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-in
+  template:
+    metadata:
+      labels:
+        app: nginx-in
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: node-role
+                operator: In
+                values:
+                  - kind-worker
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80

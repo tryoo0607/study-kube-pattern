@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-exists
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-exists
+  template:
+    metadata:
+      labels:
+        app: nginx-exists
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: gpu
+                operator: Exists
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80

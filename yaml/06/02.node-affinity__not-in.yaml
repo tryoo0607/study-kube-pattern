@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-notin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-notin
+  template:
+    metadata:
+      labels:
+        app: nginx-notin
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: node-role
+                operator: NotIn
+                values:
+                  - kind-worker
+                  - kind-worker3
+                  - kind-worker4
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80

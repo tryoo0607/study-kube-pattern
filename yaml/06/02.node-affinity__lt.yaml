@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-lt
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-lt
+  template:
+    metadata:
+      labels:
+        app: nginx-lt
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: memory-size
+                operator: Lt
+                values:
+                  - "4"
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80

@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-gt
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-gt
+  template:
+    metadata:
+      labels:
+        app: nginx-gt
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: cpu-core
+                operator: Gt
+                values:
+                  - "4" 
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
