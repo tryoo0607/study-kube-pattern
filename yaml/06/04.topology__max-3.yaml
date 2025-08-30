@@ -14,7 +14,7 @@ spec:
         app: nginx
     spec:
       topologySpreadConstraints:
-        - maxSkew: 1
+        - maxSkew: 3
           topologyKey: topology.kubernetes.io/zone
           whenUnsatisfiable: DoNotSchedule
           labelSelector:
