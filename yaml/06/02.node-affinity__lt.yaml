@@ -21,7 +21,7 @@ spec:
               - key: memory-size
                 operator: Lt
                 values:
-                  - "4"
+                  - "8"
       containers:
       - name: nginx
         image: nginx:latest

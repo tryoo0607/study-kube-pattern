@@ -21,7 +21,7 @@ spec:
               - key: cpu-core
                 operator: Gt
                 values:
-                  - "4" 
+                  - "3" 
       containers:
       - name: nginx
         image: nginx:latest
