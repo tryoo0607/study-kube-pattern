@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ## Node Selector
-kubectl label node kind-worker node-role=worker1
+kubectl label node kind-worker node-role=worker
 kubectl label node kind-worker2 node-role=worker2
 kubectl label node kind-worker3 node-role=worker3
 kubectl label node kind-worker4 node-role=worker4
