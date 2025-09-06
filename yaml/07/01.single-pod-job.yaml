@@ -1,13 +1,19 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: single-job
-  namespace: test
+  name: single-pod-job
 spec:
   template:
     spec:
       containers:
-        - name: worker
+        - name: job
           image: tryoo0607/job-test:latest
           command: ["/job-test"]
+          env:
+            - name: MODE
+              value: "fixed"
+            - name: INPUT_DIR
+              value: "/data/inputs"
+            - name: OUTPUT_DIR
+              value: "/data/outputs"
       restartPolicy: Never
