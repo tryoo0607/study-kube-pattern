@@ -40,5 +40,7 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.annotations['batch.kubernetes.io/job-completion-index']
+            - name: HOLD_FOR
+              value: 120
           ports:
             - containerPort: 8080
