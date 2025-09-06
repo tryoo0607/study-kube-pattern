@@ -4,28 +4,26 @@ metadata:
   name: peer-svc
   namespace: test
 spec:
-  clusterIP: None            # ← 헤드리스
+  clusterIP: None
   selector:
-    app: peer-demo
+    job-name: peer-job
   ports:
     - port: 8080
       targetPort: 8080
 ---
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: batch/v1
+kind: Job
 metadata:
-  name: peer-deploy
+  name: peer-job
   namespace: test
 spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: peer-demo
+  parallelism: 3
+  completions: 3
+  completionMode: Indexed
   template:
-    metadata:
-      labels:
-        app: peer-demo
     spec:
+      subdomain: peer-svc
+      restartPolicy: Never
       containers:
         - name: app
           image: tryoo0607/job-test:latest
@@ -34,8 +32,8 @@ spec:
             - name: MODE
               value: "peer"
             - name: SUBDOMAIN
-              value: "peer-svc"             # net.LookupIP 대상
-            - name: POD_IP                  # 내 IP 주입
+              value: "peer-svc"
+            - name: POD_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.podIP
