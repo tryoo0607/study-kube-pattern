@@ -40,9 +40,5 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.annotations['batch.kubernetes.io/job-completion-index']
-            - name: JOB_NAME
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.labels['job-name']
           ports:
             - containerPort: 8080
