@@ -1,0 +1,18 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: queue-job
+spec:
+  parallelism: 3
+  template:
+    spec:
+      containers:
+        - name: worker
+          image: tryoo0607/job-test:latest
+          env:
+            - name: QUEUE_URL
+              value: "redis://redis:6379"
+            - name: QUEUE_KEY
+              value: "tasks"
+          command: ["./job-test"]
+      restartPolicy: Never

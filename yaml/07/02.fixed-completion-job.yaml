@@ -1,0 +1,14 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: fixed-job
+spec:
+  completions: 5
+  parallelism: 2
+  template:
+    spec:
+      containers:
+        - name: worker
+          image: tryoo0607/job-test:latest
+          command: ["./job-test"]
+      restartPolicy: Never

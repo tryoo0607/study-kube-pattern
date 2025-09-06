@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: indexed-job
+spec:
+  completions: 4
+  parallelism: 2
+  completionMode: Indexed
+  template:
+    spec:
+      containers:
+        - name: worker
+          image: tryoo0607/job-test:latest
+          command: ["./job-test"]
+          env:
+            - name: JOB_COMPLETION_INDEX
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.annotations['batch.kubernetes.io/job-completion-index']
+      restartPolicy: Never

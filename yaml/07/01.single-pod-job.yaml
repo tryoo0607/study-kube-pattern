@@ -1,0 +1,12 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: single-job
+spec:
+  template:
+    spec:
+      containers:
+        - name: worker
+          image: tryoo0607/job-test:latest
+          command: ["./job-test"]
+      restartPolicy: Never
