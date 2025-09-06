@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: queue-seeder
+  namespace: test
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: redis-seeder
+          image: redis:7
+          command: ["sh", "-c"]
+          args:
+            - |
+              echo "📌 Redis 작업 큐 초기화 시작"
+              redis-cli -h redis -p 6379 \
+                LPUSH tasks \
+                /data/inputs/input-00.txt \
+                /data/inputs/input-01.txt \
+                /data/inputs/input-02.txt \
+                /data/inputs/input-03.txt \
+                /data/inputs/input-04.txt
+              echo "✅ 작업 추가 완료"
+              echo "현재 큐 상태:"
+              redis-cli -h redis -p 6379 LLEN tasks
