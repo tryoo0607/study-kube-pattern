@@ -21,7 +21,13 @@ spec:
                 /data/inputs/input-01.txt \
                 /data/inputs/input-02.txt \
                 /data/inputs/input-03.txt \
-                /data/inputs/input-04.txt
+                /data/inputs/input-04.txt \
+                /data/inputs/input-05.txt \
+                /data/inputs/input-06.txt \
+                /data/inputs/input-07.txt \
+                /data/inputs/input-08.txt \
+                /data/inputs/input-09.txt \
+                /data/inputs/input-10.txt
               echo "✅ 작업 추가 완료"
               echo "현재 큐 상태:"
               redis-cli -h redis -p 6379 LLEN tasks
