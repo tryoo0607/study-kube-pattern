@@ -2,6 +2,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: single-job
+  namespace: test
 spec:
   template:
     spec:

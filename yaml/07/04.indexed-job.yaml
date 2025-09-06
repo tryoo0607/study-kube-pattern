@@ -2,6 +2,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: indexed-job
+  namespace: test
 spec:
   completions: 4
   parallelism: 2
