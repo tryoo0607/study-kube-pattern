@@ -11,4 +11,5 @@ spec:
       containers:
         - name: worker
           image: tryoo0607/job-test:latest
+          command: ["/job-test"]
       restartPolicy: Never

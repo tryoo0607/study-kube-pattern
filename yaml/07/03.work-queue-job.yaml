@@ -15,4 +15,5 @@ spec:
               value: "redis://redis:6379"
             - name: QUEUE_KEY
               value: "tasks"
+          command: ["/job-test"]
       restartPolicy: Never
