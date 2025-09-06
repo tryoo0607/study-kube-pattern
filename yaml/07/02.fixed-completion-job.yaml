@@ -21,6 +21,4 @@ spec:
               value: "/data/inputs"
             - name: OUTPUT_DIR
               value: "/data/outputs"
-            - name: ITEMS_FILE
-              value: "/data/inputs/items.txt"
       restartPolicy: Never
