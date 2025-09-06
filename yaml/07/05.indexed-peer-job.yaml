@@ -1,45 +1,43 @@
-apiVersion: batch/v1
-kind: Job
+apiVersion: v1
+kind: Service
 metadata:
-  name: peer-job
+  name: peer-svc
   namespace: test
 spec:
-  completions: 3
-  parallelism: 3
-  completionMode: Indexed
+  clusterIP: None            # ← 헤드리스
+  selector:
+    app: peer-demo
+  ports:
+    - port: 8080
+      targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: peer-deploy
+  namespace: test
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: peer-demo
   template:
+    metadata:
+      labels:
+        app: peer-demo
     spec:
-      subdomain: peer-svc
-      hostname: myjob-$(JOB_COMPLETION_INDEX)
       containers:
-        - name: job
+        - name: app
           image: tryoo0607/job-test:latest
           command: ["/job-test"]
           env:
             - name: MODE
               value: "peer"
-            - name: INPUT_DIR
-              value: "/data/inputs"
-            - name: OUTPUT_DIR
-              value: "/data/outputs"
-            - name: JOB_INDEX
+            - name: SUBDOMAIN
+              value: "peer-svc"             # net.LookupIP 대상
+            - name: POD_IP                  # 내 IP 주입
               valueFrom:
                 fieldRef:
-                  fieldPath: metadata.annotations['batch.kubernetes.io/job-completion-index']
-            - name: TOTAL_PODS
-              value: "3"
-            - name: SUBDOMAIN
-              value: "peer-svc"
-      restartPolicy: Never
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: peer-svc
-spec:
-  clusterIP: None
-  selector:
-    job-name: peer-job
-  ports:
-    - port: 8080
-      targetPort: 8080
+                  fieldPath: status.podIP
+          ports:
+            - containerPort: 8080
