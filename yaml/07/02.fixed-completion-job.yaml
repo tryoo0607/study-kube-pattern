@@ -21,4 +21,6 @@ spec:
               value: "/data/inputs"
             - name: OUTPUT_DIR
               value: "/data/outputs"
+            - name: MAX_CONCURRENCY
+              value: "3"   
       restartPolicy: Never
