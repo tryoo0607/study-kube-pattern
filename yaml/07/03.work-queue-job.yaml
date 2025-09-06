@@ -2,6 +2,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: queue-job
+  namespace: test
 spec:
   parallelism: 3
   template:
