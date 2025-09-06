@@ -6,7 +6,8 @@ metadata:
 spec:
   clusterIP: None
   selector:
-    job-name: peer-job
+    app: peer-demo
+  publishNotReadyAddresses: true    # ready 전에 노출하기 위해 추가
   ports:
     - port: 8080
       targetPort: 8080
@@ -20,7 +21,11 @@ spec:
   parallelism: 3
   completions: 3
   completionMode: Indexed
+
   template:
+    metadata:
+      labels:
+        app: peer-demo 
     spec:
       subdomain: peer-svc
       restartPolicy: Never
