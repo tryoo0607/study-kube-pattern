@@ -5,7 +5,7 @@ metadata:
   namespace: test
 spec:
   schedule: "*/1 * * * *"   # 매 분 실행
-  startingDeadlineSeconds: 30   # 200초 안에 실행 가능하면 늦더라도 실행
+  startingDeadlineSeconds: 30   # 30초 안에 실행 가능하면 늦더라도 실행
   jobTemplate:
     spec:
       template:
