@@ -5,7 +5,7 @@ metadata:
   namespace: test
 spec:
   schedule: "*/1 * * * *"   # 매 분 실행
-  failedJobsHistoryLimit: 1   # 최근 실패한 Job 1개만 보관
+  failedJobsHistoryLimit: 3   # 최근 실패한 Job 1개만 보관
   jobTemplate:
     spec:
       template:
