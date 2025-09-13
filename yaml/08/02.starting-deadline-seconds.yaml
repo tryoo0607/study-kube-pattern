@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: hello-deadline
+  namespace: test
+spec:
+  schedule: "*/1 * * * *"   # 매 분 실행
+  startingDeadlineSeconds: 30   # 200초 안에 실행 가능하면 늦더라도 실행
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: hello
+            image: busybox:1.28
+            command:
+            - /bin/sh
+            - -c
+            - date; echo "Hello with startingDeadlineSeconds"
+          restartPolicy: OnFailure

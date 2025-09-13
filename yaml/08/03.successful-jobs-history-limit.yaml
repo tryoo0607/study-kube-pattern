@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: hello-success-limit
+  namespace: test
+spec:
+  schedule: "*/1 * * * *"   # 매 분 실행
+  successfulJobsHistoryLimit: 3   # 최근 성공한 Job 3개만 보관
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: hello
+            image: busybox:1.28
+            command:
+            - /bin/sh
+            - -c
+            - date; echo "Success limit example"
+          restartPolicy: OnFailure

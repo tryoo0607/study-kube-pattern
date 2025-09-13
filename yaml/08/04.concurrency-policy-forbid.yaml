@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: hello-forbid
+  namespace: test
+spec:
+  schedule: "*/1 * * * *"   # 매 분 실행
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: hello
+            image: busybox:1.28
+            command:
+            - /bin/sh
+            - -c
+            - date; echo "Start job"; sleep 120; echo "End job"
+          restartPolicy: OnFailure

@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: hello-timezone
+  namespace: test
+spec:
+  schedule: "0 9 * * *"    # 매일 9시 실행
+  timeZone: "Asia/Seoul"   # 한국 시간 기준
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: hello
+            image: busybox:1.28
+            command:
+            - /bin/sh
+            - -c
+            - date; echo "Hello with Asia/Seoul timezone"
+          restartPolicy: OnFailure

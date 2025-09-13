@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: hello-suspend
+  namespace: test
+spec:
+  schedule: "*/1 * * * *"   # 매 분 실행
+  suspend: true             # 일단 중단 상태로 생성됨
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: hello
+            image: busybox:1.28
+            command: 
+            - /bin/sh
+            - -c
+            - date; echo "This job is suspended"
+          restartPolicy: OnFailure

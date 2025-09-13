@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: hello-allow
+  namespace: test
+spec:
+  schedule: "*/1 * * * *"   # 매 분 실행
+  concurrencyPolicy: Allow  # 기본값: 동시에 여러 Job 실행 허용
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: hello
+            image: busybox:1.28
+            command:
+            - /bin/sh
+            - -c
+            - |
+              date; echo "Start job"; sleep 120; echo "End job"
+          restartPolicy: OnFailure
