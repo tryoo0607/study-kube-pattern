@@ -8,6 +8,7 @@ spec:
   failedJobsHistoryLimit: 3 # 바로 clean up
   jobTemplate:
     spec:
+      backoffLimit: 0 
       ttlSecondsAfterFinished: 0
       template:
         spec:
