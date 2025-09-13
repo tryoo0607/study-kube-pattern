@@ -18,5 +18,5 @@ spec:
             - /bin/sh
             - -c
             - exit 1   # 무조건 실패하게 설정
-          restartPolicy: OnFailure
+          restartPolicy: Never
           
