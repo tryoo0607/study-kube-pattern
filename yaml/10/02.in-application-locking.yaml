@@ -14,6 +14,18 @@ spec:
       labels:
         app: zookeeper
     spec:
+      initContainers:
+      - name: init-myid
+        image: busybox
+        command:
+        - sh
+        - -c
+        - |
+          ordinal=$(hostname | awk -F'-' '{print $NF}')
+          echo $((ordinal + 1)) > /data/myid
+        volumeMounts:
+        - name: datadir
+          mountPath: /data
       containers:
       - name: zookeeper
         image: zookeeper:3.9
@@ -22,9 +34,11 @@ spec:
         - containerPort: 2888
         - containerPort: 3888
         env:
-        - name: ZOO_MY_ID
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.name
         - name: ZOO_SERVERS
-          value: server.1=zk-0.zookeeper:2888:3888 server.2=zk-1.zookeeper:2888:3888 server.3=zk-2.zookeeper:2888:3888
+          value: server.1=singleton-zk-0.zookeeper:2888:3888 server.2=singleton-zk-1.zookeeper:2888:3888 server.3=singleton-zk-2.zookeeper:2888:3888
+        volumeMounts:
+        - name: datadir
+          mountPath: /data
+      volumes:
+      - name: datadir
+        emptyDir: {}
