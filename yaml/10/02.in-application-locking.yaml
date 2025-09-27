@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: singleton-zk
-  namepsace: test
+  namespace: test
 spec:
   serviceName: "zookeeper"
   replicas: 3
