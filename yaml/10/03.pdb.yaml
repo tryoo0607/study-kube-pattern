@@ -1,0 +1,10 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: singleton-pdb
+  namespace: test
+spec:
+  minAvailable: 1    # 항상 최소 1개 Pod은 살아있어야 함
+  selector:
+    matchLabels:
+      app: singleton
