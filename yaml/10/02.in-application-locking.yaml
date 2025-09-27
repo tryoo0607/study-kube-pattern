@@ -34,8 +34,11 @@ spec:
         - containerPort: 2888
         - containerPort: 3888
         env:
-        - name: ZOO_SERVERS
-          value: server.1=singleton-zk-0.zookeeper:2888:3888 server.2=singleton-zk-1.zookeeper:2888:3888 server.3=singleton-zk-2.zookeeper:2888:3888
+      - name: ZOO_SERVERS
+        value: >
+          server.1=singleton-zk-0.zookeeper.test.svc.cluster.local:2888:3888;
+          server.2=singleton-zk-1.zookeeper.test.svc.cluster.local:2888:3888;
+          server.3=singleton-zk-2.zookeeper.test.svc.cluster.local:2888:3888
         volumeMounts:
         - name: datadir
           mountPath: /data
