@@ -1,20 +1,30 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: singleton-app
-  namespace: test
+  name: singleton-zk
+  namepsace: test
 spec:
+  serviceName: "zookeeper"
   replicas: 3
   selector:
     matchLabels:
-      app: singleton-app
+      app: zookeeper
   template:
     metadata:
       labels:
-        app: singleton-app
+        app: zookeeper
     spec:
       containers:
-      - name: singleton-app
-        image: your-locking-app:latest   # ZooKeeper와 분산락 연동 구현된 앱
+      - name: zookeeper
+        image: zookeeper:3.9
         ports:
-        - containerPort: 8080
+        - containerPort: 2181
+        - containerPort: 2888
+        - containerPort: 3888
+        env:
+        - name: ZOO_MY_ID
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: ZOO_SERVERS
+          value: server.1=zk-0.zookeeper:2888:3888 server.2=zk-1.zookeeper:2888:3888 server.3=zk-2.zookeeper:2888:3888
