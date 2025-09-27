@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
   name: singleton-rs
+  namespace: test
 spec:
   replicas: 1
   selector:
