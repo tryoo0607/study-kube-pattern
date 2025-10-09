@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-parallel-headless
+  namespace: test
+spec:
+  clusterIP: None
+  selector:
+    app: web-parallel
+  ports:
+  - port: 80
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: web-parallel
+  namespace: test
+spec:
+  serviceName: web-parallel-headless
+  replicas: 3
+  podManagementPolicy: Parallel  # 기본값: OrderedReady
+  selector:
+    matchLabels:
+      app: web-parallel
+  template:
+    metadata:
+      labels:
+        app: web-parallel
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.25
+        ports:
+        - containerPort: 80
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 500Mi
