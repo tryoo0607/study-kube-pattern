@@ -3,8 +3,8 @@ kind: Service
 metadata:
   name: mysql-headless
   namespace: test
-labels:
-  app: mysql
+  labels:
+    app: mysql
 spec:
   ports:
   - port: 3306
@@ -45,7 +45,7 @@ spec:
   - metadata:
       name: data
     spec:
-      accessModes: [ "ReadWriteOnce" ]
+      accessModes: ["ReadWriteOnce"]
       resources:
         requests:
           storage: 1Gi
