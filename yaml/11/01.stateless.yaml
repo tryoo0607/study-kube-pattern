@@ -1,0 +1,93 @@
+# ============================================
+# 1. PersistentVolumeClaim (공유 로그 저장소)
+# ============================================
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: shared-log-pvc
+  labels:
+    app: stateless-web
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: manual
+---
+# ============================================
+# 2. Deployment (Stateless Web App)
+# ============================================
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stateless-web
+  labels:
+    app: stateless-web
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: stateless-web
+  template:
+    metadata:
+      labels:
+        app: stateless-web
+    spec:
+      containers:
+        - name: web
+          image: nginx:1.27
+          ports:
+            - containerPort: 80
+          env:
+            - name: REDIS_HOST
+              value: redis.default.svc.cluster.local
+          volumeMounts:
+            - name: shared-logs
+              mountPath: /var/log/nginx
+      volumes:
+        - name: shared-logs
+          persistentVolumeClaim:
+            claimName: shared-log-pvc
+---
+# ============================================
+# 3. Service (ClusterIP)
+# ============================================
+apiVersion: v1
+kind: Service
+metadata:
+  name: stateless-web
+  labels:
+    app: stateless-web
+spec:
+  type: ClusterIP
+  selector:
+    app: stateless-web
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+---
+# ============================================
+# 4. Horizontal Pod Autoscaler (HPA)
+# ============================================
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: stateless-web-hpa
+  labels:
+    app: stateless-web
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: stateless-web
+  minReplicas: 3
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
