@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: env-before
+  namespace: test
+spec:
+  containers:
+  - name: env-check
+    image: busybox
+    command:
+      - sh
+      - -c
+      - |
+        echo "=== BEFORE POD: ENV VARS ==="
+        env | grep SVC_
+        echo ""
+        echo "=== DNS TEST ==="
+        nslookup svc-a.test.svc.cluster.local || true
+        nslookup svc-b.test.svc.cluster.local || true
+        nslookup svc-c.test.svc.cluster.local || true
+        sleep 3600

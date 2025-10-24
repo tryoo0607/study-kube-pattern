@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: external-db
+  namespace: test
+spec:
+  type: ExternalName
+  externalName: db.example.com
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: external-db-tester
+  namespace: test
+spec:
+  containers:
+  - name: tester
+    image: busybox
+    command:
+      - sh
+      - -c
+      - |
+        echo "=== DNS TEST ==="
+        nslookup external-db.test.svc.cluster.local
+        echo ""
+        echo "=== CURL TEST ==="
+        wget -qO- external-db.test.svc.cluster.local || true
+        sleep 3600

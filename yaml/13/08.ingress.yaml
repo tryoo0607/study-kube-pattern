@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: test-ingress
+  namespace: test
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+  - http:
+      paths:
+      - path: /echo
+        pathType: Prefix
+        backend:
+          service:
+            name: echo-service   # 03.session-affinity.yaml에서 생성한 서비스 재활용
+            port:
+              number: 80
