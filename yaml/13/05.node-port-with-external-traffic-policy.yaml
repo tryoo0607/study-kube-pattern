@@ -4,7 +4,7 @@ metadata:
   name: nginx-nodeport
   namespace: test
 spec:
-  replicas: 3   # control-plane에도 하나 배치되도록 늘림
+  replicas: 2
   selector:
     matchLabels:
       app: nginx-node
@@ -13,11 +13,6 @@ spec:
       labels:
         app: nginx-node
     spec:
-      tolerations:                # control-plane에도 스케줄링 허용
-      - key: "node-role.kubernetes.io/control-plane"
-        operator: "Exists"
-        effect: "NoSchedule"
-      nodeSelector: {}            # 제약 없음 (모든 노드 대상)
       containers:
       - name: nginx
         image: nginx
