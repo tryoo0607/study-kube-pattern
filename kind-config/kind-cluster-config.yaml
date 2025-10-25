@@ -12,14 +12,17 @@ nodes:
   - containerPort: 80   # Ingress HTTP
     hostPort: 18080
     protocol: TCP
+    listenAddress: "0.0.0.0" 
   - containerPort: 443  # Ingress HTTPS
     hostPort: 18443
     protocol: TCP
+    listenAddress: "0.0.0.0" 
     
   # NodePort 설정용
   - containerPort: 30080  
     hostPort: 30080       
     protocol: TCP
+    listenAddress: "0.0.0.0" 
 
   # ingress 설치를 위한 설정
   # kubeadmConfigPatches:  
