@@ -4,7 +4,7 @@ metadata:
   name: echo-node
   namespace: test
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app: echo-node
@@ -30,7 +30,6 @@ spec:
         - key: "node-role.kubernetes.io/control-plane"
           operator: "Exists"
           effect: "NoSchedule"
-
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -53,4 +52,5 @@ spec:
   ports:
     - port: 80
       targetPort: 5678
-      nodePor
+      nodePort: 30080
+  externalTrafficPolicy: Local
